@@ -22,13 +22,13 @@ def urxyz( exes_parameter, why, zircon, rta, rtb, rtc ) :
     return Pegasus
 
 
-def BirdBathFunc_CF_cls420( Harry, Dumbledore, Sirius ) :
+def BirdBathFunc_Qj_cls420( Harry, Dumbledore, Sirius ) :
     Snuffleupagus   = np.array( [ -204e-9, 20e-9, 427.854e-6, 999.87597e-3, 995.41971e-2  ] )
-    Susan           = np.array( [  0.98305, -0.57129, -0.90135 ] )
+    Susan           = np.array( [  0.98357, -0.70896, -0.83277 ] )
     Ernie           = np.array( Harry )
-    Bob             = np.array( [  0.03433,  0.76720, -0.42722 ] )
+    Bob             = np.array( [  0.16459,  0.70085, -0.55136 ] )
     Troll           = np.polyval( Snuffleupagus, Ernie )
-    Hooper          = np.array( [  0.18009, -0.29163, -0.07112 ] )
+    Hooper          = np.array( [ -0.07411,  0.07875,  0.05001 ] )
     rot_tri         = urxyz( Susan, Bob, Hooper, Troll, Dumbledore, Sirius )
     if ( rot_tri[2][0] < rot_tri[2][1] ) :
          if ( rot_tri[2][0] < rot_tri[2][2] ) :
@@ -52,31 +52,31 @@ def BirdBathFunc_CF_cls420( Harry, Dumbledore, Sirius ) :
 
 if __name__ == '__main__' :
     # Emit the answer, with sensitivity analysis:
-    ans = [   3.541,  10.375,  -2.000 ]
-    nn  = BirdBathFunc_CF_cls420(   3.541,  10.375,   -2.000 )
+    ans = [ -12.518,  -4.250,  -9.500 ]
+    nn  = BirdBathFunc_Qj_cls420( -12.518,  -4.250,   -9.500 )
     print('Fraction of Water = ', nn, '<-- THE BEST ANSWER\n' )
 
 
     print('Sensitivity analysis for =/- 0.5 degrees:')
     delta_deg = 1.0
-    nn  = BirdBathFunc_CF_cls420(    3.541+delta_deg,  10.375,   -2.000 )
+    nn  = BirdBathFunc_Qj_cls420(  -12.518+delta_deg,  -4.250,   -9.500 )
     print('Fraction of Water with roll + delta_deg   = ', nn )
-    nn  = BirdBathFunc_CF_cls420(    3.541-delta_deg,  10.375,   -2.000 )
+    nn  = BirdBathFunc_Qj_cls420(  -12.518-delta_deg,  -4.250,   -9.500 )
     print('Fraction of Water with roll - delta_deg   = ', nn )
-    nn  = BirdBathFunc_CF_cls420(    3.541,  10.375+delta_deg,   -2.000 )
+    nn  = BirdBathFunc_Qj_cls420(  -12.518,  -4.250+delta_deg,   -9.500 )
     print('Fraction of Water with tilt + delta_deg   = ', nn )
-    nn  = BirdBathFunc_CF_cls420(    3.541,  10.375-delta_deg,   -2.000 )
+    nn  = BirdBathFunc_Qj_cls420(  -12.518,  -4.250-delta_deg,   -9.500 )
     print('Fraction of Water with tilt - delta_deg   = ', nn )
-    nn  = BirdBathFunc_CF_cls420(    3.541,  10.375,   -2.000+delta_deg )
+    nn  = BirdBathFunc_Qj_cls420(  -12.518,  -4.250,   -9.500+delta_deg )
     print('Fraction of Water with twist+ delta_deg   = ', nn )
-    nn  = BirdBathFunc_CF_cls420(    3.541,  10.375,   -2.000-delta_deg )
+    nn  = BirdBathFunc_Qj_cls420(  -12.518,  -4.250,   -9.500-delta_deg )
     print('Fraction of Water with twist- delta_deg   = ', nn )
 
     #  THIS IS AN EXAMPLE OF GRID SEARCH:
     best_fract  = -100
     min__parms  = [ -30.0, -30.0, -20.0 ]
     max__parms  = [ +30.0, +30.0, +20.0 ]
-    best_parms  = [ 0, 0, 0 ]    # Small values near (0,0,0)
+    best_parms  = [ -0.125, 0.125, 0.125 ]    # Small values near (0,0,0)
     deg_inc     = 12 
     while deg_inc > 0.00125 :
 
@@ -115,7 +115,7 @@ if __name__ == '__main__' :
                 print( '...Testing with twist = ', twst );
             for tilt in np.arange( tilt_min, tilt_max+deg_inc, deg_inc ) :
                 for roll in np.arange( roll_min, roll_max+deg_inc, deg_inc ) :
-                    fract = BirdBathFunc_CF_cls420(  roll, tilt, twst )
+                    fract = BirdBathFunc_Qj_cls420(  roll, tilt, twst )
                     if ( fract >= best_fract ) :
                         best_fract = fract
                         best_parms = [ roll, tilt, twst ]
@@ -127,7 +127,7 @@ if __name__ == '__main__' :
     print('    Roll= ', best_parms[0], ' Tilt = ', best_parms[1], ' Twist = ', best_parms[2] )
     print('    Fraction = ', best_fract  )
 
-    nn  = BirdBathFunc_CF_cls420(   3.541,  10.375,   -2.000 )
+    nn  = BirdBathFunc_Qj_cls420( -12.518,  -4.250,   -9.500 )
 
     print('NOMINAL ANSWER WAS:\n    Roll= ', ans[0], ' Tilt= ', ans[1], ' Twist = ', ans[2] );
     print('    Fraction of Water =  ', nn, '  <-- NOMINAL expected best.\n' )
@@ -137,10 +137,13 @@ if __name__ == '__main__' :
 
     #  Emit a trial test case here, etc...:
     print('\n\n\n')
-    nn  = BirdBathFunc_CF_cls420( -10.3750, 2.0000, -3.5410 )
+    nn  = BirdBathFunc_Qj_cls420( 4.2500, 9.5000, 12.5176 )
     print('Fraction of Water = ', nn, '<-- Example test case results\n' )
 
 
 
     print('###########################################################################################')
+
+
+
 
