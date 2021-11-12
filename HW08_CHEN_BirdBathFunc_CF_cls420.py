@@ -1,6 +1,10 @@
+# Brandon Chen
+
 import BirdBathFunc_CF_cls420 as BirdBath
 import numpy as np
+import random
 
+# grid search implemented by Brandon Chen
 def gridSearch():
     best_fraction = -100
     minGuess  = [ -30.0, -30.0, -20.0 ]
@@ -44,10 +48,27 @@ def gridSearch():
     print("roll: {}  tilt: {}  twist: {}".format(round(bestGuess[0], 6), round(bestGuess[1], 6), round(bestGuess[2], 6)))
     print("fraction percentage: {}".format(round(best_fraction, 6)))
     
-        
+# random search implemented by Jack Xu
+def randomSearch():
+    #https://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf
+    #Implementation based off this paper
+    threshold = .499
+    currentCost = 0
+    tiltRandom = 0
+    rollRandom = 0
+    twistRandom = 0
+    while currentCost < threshold:
+        tiltRandom = random.uniform(-30,30)
+        rollRandom = random.uniform(-30,30)
+        twistRandom = random.uniform(-30,30)
+        currentCost = BirdBath.BirdBathFunc_CF_cls420(tiltRandom, rollRandom, twistRandom)
+    print("tilt = {}, roll ={}, twist = {}".format(round(tiltRandom, 6), round(rollRandom, 6), round(twistRandom, 6)))
+    print("fraction in water = {}".format(round(currentCost, 6)))
+
 
 def main():
     gridSearch()
+    randomSearch()
 
 if __name__ == '__main__':
     main()
